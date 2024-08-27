@@ -33,7 +33,7 @@ tauri-plugin-localhost = { git = "https://github.com/tauri-apps/plugins-workspac
 portpicker = "0.1"                                                                                  # used in the example to pick a random free port
 ```
 
-## Usage
+## 🛠️ Usage
 
 First you need to register the core plugin with Tauri:
 
