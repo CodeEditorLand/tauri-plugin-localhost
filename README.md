@@ -1,14 +1,10 @@
 ![plugin-localhost](banner.png)
 
-[DEPRECATED] Please use the plugin from
-https://github.com/tauri-apps/plugins-workspace instead.
+[DEPRECATED] Please use the plugin from https://github.com/tauri-apps/plugins-workspace instead.
 
-Expose your apps assets through a localhost server instead of the default custom
-protocol.
+Expose your apps assets through a localhost server instead of the default custom protocol.
 
-> Note: This plugins brings considerable security risks and you should only use
-> it if you know what your are doing. If in doubt, use the default custom
-> protocol implementation.
+> Note: This plugins brings considerable security risks and you should only use it if you know what your are doing. If in doubt, use the default custom protocol implementation.
 
 ## Install
 
@@ -16,12 +12,9 @@ _This plugin requires a Rust version of at least **1.64**_
 
 There are three general methods of installation that we can recommend.
 
-1. Use crates.io and npm (easiest, and requires you to trust that our publishing
-   pipeline worked)
-2. Pull sources directly from Github using git tags / revision hashes (most
-   secure)
-3. Git submodule install this repo in your tauri project and then use file
-   protocol to ingest the source (most secure, but inconvenient to use)
+1. Use crates.io and npm (easiest, and requires you to trust that our publishing pipeline worked)
+2. Pull sources directly from Github using git tags / revision hashes (most secure)
+3. Git submodule install this repo in your tauri project and then use file protocol to ingest the source (most secure, but inconvenient to use)
 
 Install the Core plugin by adding the following to your `Cargo.toml` file:
 
@@ -30,10 +23,10 @@ Install the Core plugin by adding the following to your `Cargo.toml` file:
 ```toml
 [dependencies]
 tauri-plugin-localhost = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
-portpicker = "0.1"                                                                                  # used in the example to pick a random free port
+portpicker = "0.1" # used in the example to pick a random free port
 ```
 
-## 🛠️ Usage
+## Usage
 
 First you need to register the core plugin with Tauri:
 
@@ -67,8 +60,7 @@ fn main() {
 
 ## Contributing
 
-PRs accepted. Please make sure to read the Contributing Guide before making a
-pull request.
+PRs accepted. Please make sure to read the Contributing Guide before making a pull request.
 
 ## License
 
