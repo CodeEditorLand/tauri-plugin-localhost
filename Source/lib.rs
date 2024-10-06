@@ -24,11 +24,7 @@ pub struct Response {
 }
 
 impl Response {
-	pub fn add_header<H:Into<String>, V:Into<String>>(
-		&mut self,
-		header:H,
-		value:V,
-	) {
+	pub fn add_header<H:Into<String>, V:Into<String>>(&mut self, header:H, value:V) {
 		self.headers.insert(header.into(), value.into());
 	}
 }
@@ -59,8 +55,8 @@ impl Builder {
 			.setup(move |app| {
 				let asset_resolver = app.asset_resolver();
 				std::thread::spawn(move || {
-					let server = Server::http(&format!("localhost:{port}"))
-						.expect("Unable to spawn server");
+					let server =
+						Server::http(&format!("localhost:{port}")).expect("Unable to spawn server");
 					for req in server.incoming_requests() {
 						let path = req
 							.url()
@@ -71,16 +67,11 @@ impl Builder {
 						#[allow(unused_mut)]
 						if let Some(mut asset) = asset_resolver.get(path) {
 							let request = Request { url:req.url().into() };
-							let mut response =
-								Response { headers:Default::default() };
+							let mut response = Response { headers:Default::default() };
 
-							response
-								.add_header("Content-Type", asset.mime_type);
+							response.add_header("Content-Type", asset.mime_type);
 							if let Some(csp) = asset.csp_header {
-								response.headers.insert(
-									"Content-Security-Policy".into(),
-									csp,
-								);
+								response.headers.insert("Content-Security-Policy".into(), csp);
 							}
 
 							if let Some(on_request) = &on_request {
@@ -91,26 +82,19 @@ impl Builder {
 							if let Some(response_csp) =
 								response.headers.get("Content-Security-Policy")
 							{
-								let html =
-									String::from_utf8_lossy(&asset.bytes);
-								let body = html.replacen(
-									tauri::utils::html::CSP_TOKEN,
-									response_csp,
-									1,
-								);
+								let html = String::from_utf8_lossy(&asset.bytes);
+								let body =
+									html.replacen(tauri::utils::html::CSP_TOKEN, response_csp, 1);
 								asset.bytes = body.as_bytes().to_vec();
 							}
 
 							let mut resp = HttpResponse::from_data(asset.bytes);
 							for (header, value) in response.headers {
-								if let Ok(h) =
-									Header::from_bytes(header.as_bytes(), value)
-								{
+								if let Ok(h) = Header::from_bytes(header.as_bytes(), value) {
 									resp.add_header(h);
 								}
 							}
-							req.respond(resp)
-								.expect("unable to setup response");
+							req.respond(resp).expect("unable to setup response");
 						}
 					}
 				});
